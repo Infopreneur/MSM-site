@@ -1,206 +1,406 @@
-import { useMemo, useState } from "react";
-import { CalendarRange, CheckCircle2, Mail, MessageSquare, Phone, Send, UserRound } from "lucide-react";
+import { CalendarDays, CheckCircle2, Clock3, Mail, MapPin, Phone, UserRound } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-type FormVariant = "webinar" | "application" | "consultation" | "call";
+const states = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+];
 
-type LeadFormProps = {
-  variant: FormVariant;
+const fieldClass =
+  "h-14 rounded-xl border-white/[0.08] bg-white/[0.04] text-white placeholder:text-gray-600 focus-visible:ring-[#00FF85]/20";
+const labelClass = "flex items-center gap-2 text-gray-300";
+
+type SuccessProps = {
   title: string;
-  description: string;
-  ctaLabel: string;
-  showInterest?: boolean;
-  dark?: boolean;
+  body: string;
 };
 
-const baseConfig = {
-  tenantId: "default-money-smart",
-  crmProvider: "GoHighLevel / Builder CRM",
-  crmWebhookUrl: "https://example.com/api/ghl-webhook",
-  calendarUrl: "https://calendar.example.com/moneysmart",
-  webinarUrl: "https://webinar.example.com/moneysmart",
-  automation: {
-    pipelineStage: {
-      webinar: "Webinar Registered",
-      application: "Agent Application Submitted",
-      consultation: "Insurance Consultation Requested",
-      call: "Discovery Call Requested",
-    },
-    smsFollowUp: true,
-    emailNurture: true,
-    calendarBooking: true,
-  },
-};
+function SuccessState({ title, body }: SuccessProps) {
+  return (
+    <div className="flex min-h-[70vh] items-center justify-center px-6 pt-24">
+      <div className="max-w-lg text-center">
+        <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-[#00FF85]/10">
+          <CheckCircle2 className="h-10 w-10 text-[#00FF85]" />
+        </div>
+        <h1 className="mb-4 text-4xl font-bold text-white">{title}</h1>
+        <p className="text-lg leading-relaxed text-gray-400">{body}</p>
+      </div>
+    </div>
+  );
+}
 
-export function LeadForm({ variant, title, description, ctaLabel, showInterest = false, dark = false }: LeadFormProps) {
-  const [formState, setFormState] = useState({
-    name: "",
+export function ApplicationForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
     email: "",
     phone: "",
     state: "",
-    licensed: "No",
-    schedule: "Full-time",
-    interest: "",
+    licensed: "",
+    availability: "",
+    interestReason: "",
   });
-  const [submitted, setSubmitted] = useState(false);
 
-  const pipelineStage = useMemo(() => baseConfig.automation.pipelineStage[variant], [variant]);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const payload = {
-      tenantId: baseConfig.tenantId,
-      crmProvider: baseConfig.crmProvider,
-      crmWebhookUrl: baseConfig.crmWebhookUrl,
-      destinationCalendarUrl: baseConfig.calendarUrl,
-      destinationWebinarUrl: baseConfig.webinarUrl,
-      pipelineStage,
-      automation: baseConfig.automation,
-      formType: variant,
-      submittedAt: new Date().toISOString(),
-      lead: formState,
-    };
-
-    console.log("MoneySmart Movement lead payload", payload);
-    setSubmitted(true);
-  };
-
-  const cardClass = dark
-    ? "rounded-[28px] border border-white/10 bg-[#0b0d0f] text-white shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
-    : "rounded-[28px] border border-slate-200 bg-white text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.08)]";
-
-  const inputClass = dark
-    ? "rounded-[18px] border-white/10 bg-white/5 pl-10 text-white placeholder:text-white/35"
-    : "rounded-[18px] border-slate-200 pl-10";
+  if (submitted) {
+    return (
+      <SuccessState
+        title="Application Submitted"
+        body="Thank you for your interest! Our team will review your application and reach out within 24-48 hours to schedule your discovery call."
+      />
+    );
+  }
 
   return (
-    <Card className={cardClass}>
-      <CardContent className="p-5 sm:p-7">
-        {submitted ? (
-          <div className={`rounded-[24px] p-6 ${dark ? "bg-[#101416]" : "bg-emerald-50"}`}>
-            <CheckCircle2 className="h-10 w-10 text-[#39f277]" />
-            <h3 className={`mt-4 text-2xl font-semibold ${dark ? "text-white" : "text-slate-950"}`}>You&apos;re in.</h3>
-            <p className={`mt-2 text-sm leading-7 ${dark ? "text-white/70" : "text-slate-600"}`}>
-              Your information is ready for lead creation, pipeline assignment, SMS follow-up, email nurture, and calendar booking.
-            </p>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <div className={`rounded-[20px] p-4 ${dark ? "bg-white/5" : "bg-white"}`}>
-                <p className={`font-medium ${dark ? "text-white" : "text-slate-950"}`}>CRM provider</p>
-                <p className={`mt-1 text-sm ${dark ? "text-white/55" : "text-slate-500"}`}>{baseConfig.crmProvider}</p>
-              </div>
-              <div className={`rounded-[20px] p-4 ${dark ? "bg-white/5" : "bg-white"}`}>
-                <p className={`font-medium ${dark ? "text-white" : "text-slate-950"}`}>Multi-tenant ready</p>
-                <p className={`mt-1 text-sm ${dark ? "text-white/55" : "text-slate-500"}`}>Clone and swap tenantId, webhook URL, and workflow mapping.</p>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="mb-5">
-              <div className={`inline-flex rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "bg-[#102117] text-[#7ef9a7]" : "bg-emerald-50 text-emerald-700"}`}>
-                {pipelineStage}
-              </div>
-              <h3 className={`mt-4 text-[28px] font-semibold leading-[1.08] tracking-[-0.03em] ${dark ? "text-white" : "text-slate-950"}`}>{title}</h3>
-              <p className={`mt-3 text-sm leading-7 ${dark ? "text-white/68" : "text-slate-600"}`}>{description}</p>
-            </div>
+    <form
+      className="space-y-6"
+      onSubmit={(event) => {
+        event.preventDefault();
+        setSubmitted(true);
+      }}
+    >
+      <TextField
+        icon={<UserRound className="h-4 w-4 text-gray-500" />}
+        label="Full Name *"
+        placeholder="Your full name"
+        value={formData.fullName}
+        onChange={(value) => setFormData((current) => ({ ...current, fullName: value }))}
+        required
+      />
+      <TextField
+        icon={<Mail className="h-4 w-4 text-gray-500" />}
+        label="Email *"
+        placeholder="your@email.com"
+        value={formData.email}
+        onChange={(value) => setFormData((current) => ({ ...current, email: value }))}
+        required
+        type="email"
+      />
+      <TextField
+        icon={<Phone className="h-4 w-4 text-gray-500" />}
+        label="Phone *"
+        placeholder="(555) 000-0000"
+        value={formData.phone}
+        onChange={(value) => setFormData((current) => ({ ...current, phone: value }))}
+        required
+        type="tel"
+      />
+      <SelectField
+        icon={<MapPin className="h-4 w-4 text-gray-500" />}
+        label="State"
+        placeholder="Select your state"
+        value={formData.state}
+        onValueChange={(value) => setFormData((current) => ({ ...current, state: value }))}
+        options={states}
+      />
+      <SelectField
+        label="Currently Licensed?"
+        placeholder="Select one"
+        value={formData.licensed}
+        onValueChange={(value) => setFormData((current) => ({ ...current, licensed: value }))}
+        options={["Yes, I'm licensed", "No, not yet", "In progress"]}
+      />
+      <SelectField
+        label="Interested In"
+        placeholder="Full time or part time?"
+        value={formData.availability}
+        onValueChange={(value) => setFormData((current) => ({ ...current, availability: value }))}
+        options={["Full Time", "Part Time"]}
+      />
+      <TextareaField
+        label="Why are you interested?"
+        placeholder="Tell us what makes this opportunity exciting to you."
+        value={formData.interestReason}
+        onChange={(value) => setFormData((current) => ({ ...current, interestReason: value }))}
+      />
+      <Button className="h-14 w-full rounded-xl bg-[#00FF85] text-base font-bold text-[#0A0A0B] hover:bg-[#00E077]">
+        Submit Application
+      </Button>
+    </form>
+  );
+}
 
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor={`${variant}-name`} className={dark ? "text-white/80" : ""}>Name</Label>
-                  <div className="relative">
-                    <UserRound className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${dark ? "text-white/35" : "text-slate-400"}`} />
-                    <Input id={`${variant}-name`} required value={formState.name} onChange={(event) => setFormState((current) => ({ ...current, name: event.target.value }))} className={inputClass} placeholder="Your full name" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor={`${variant}-email`} className={dark ? "text-white/80" : ""}>Email</Label>
-                  <div className="relative">
-                    <Mail className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${dark ? "text-white/35" : "text-slate-400"}`} />
-                    <Input id={`${variant}-email`} type="email" required value={formState.email} onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))} className={inputClass} placeholder="you@example.com" />
-                  </div>
-                </div>
-              </div>
+export function DiscoveryCallForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    preferredDate: "",
+    preferredTime: "",
+    notes: "",
+  });
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor={`${variant}-phone`} className={dark ? "text-white/80" : ""}>Phone</Label>
-                  <div className="relative">
-                    <Phone className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${dark ? "text-white/35" : "text-slate-400"}`} />
-                    <Input id={`${variant}-phone`} required value={formState.phone} onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))} className={inputClass} placeholder="(555) 555-5555" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor={`${variant}-state`} className={dark ? "text-white/80" : ""}>State</Label>
-                  <Input id={`${variant}-state`} required value={formState.state} onChange={(event) => setFormState((current) => ({ ...current, state: event.target.value }))} className={dark ? "rounded-[18px] border-white/10 bg-white/5 text-white placeholder:text-white/35" : "rounded-[18px] border-slate-200"} placeholder="Your state" />
-                </div>
-              </div>
+  if (submitted) {
+    return (
+      <SuccessState
+        title="Call Booked!"
+        body="We've received your booking request. A team member will confirm your discovery call time within 24 hours."
+      />
+    );
+  }
 
-              {(variant === "application" || variant === "webinar" || variant === "call") && (
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label className={dark ? "text-white/80" : ""}>Licensed?</Label>
-                    <Select value={formState.licensed} onValueChange={(value) => setFormState((current) => ({ ...current, licensed: value }))}>
-                      <SelectTrigger className={dark ? "rounded-[18px] border-white/10 bg-white/5 text-white" : "rounded-[18px] border-slate-200"}>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes</SelectItem>
-                        <SelectItem value="No">No</SelectItem>
-                        <SelectItem value="In Progress">In Progress</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className={dark ? "text-white/80" : ""}>Full-time or Part-time</Label>
-                    <Select value={formState.schedule} onValueChange={(value) => setFormState((current) => ({ ...current, schedule: value }))}>
-                      <SelectTrigger className={dark ? "rounded-[18px] border-white/10 bg-white/5 text-white" : "rounded-[18px] border-slate-200"}>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Full-time">Full-time</SelectItem>
-                        <SelectItem value="Part-time">Part-time</SelectItem>
-                        <SelectItem value="Exploring">Exploring</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              )}
+  return (
+    <form
+      className="space-y-5 rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8"
+      onSubmit={(event) => {
+        event.preventDefault();
+        setSubmitted(true);
+      }}
+    >
+      <TextField
+        icon={<UserRound className="h-4 w-4 text-gray-500" />}
+        label="Full Name *"
+        placeholder="Your full name"
+        value={formData.fullName}
+        onChange={(value) => setFormData((current) => ({ ...current, fullName: value }))}
+        required
+      />
+      <TextField
+        icon={<Mail className="h-4 w-4 text-gray-500" />}
+        label="Email *"
+        placeholder="your@email.com"
+        value={formData.email}
+        onChange={(value) => setFormData((current) => ({ ...current, email: value }))}
+        required
+        type="email"
+      />
+      <TextField
+        icon={<Phone className="h-4 w-4 text-gray-500" />}
+        label="Phone"
+        placeholder="(555) 000-0000"
+        value={formData.phone}
+        onChange={(value) => setFormData((current) => ({ ...current, phone: value }))}
+        type="tel"
+      />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <TextField
+          icon={<CalendarDays className="h-4 w-4 text-gray-500" />}
+          label="Preferred Date"
+          value={formData.preferredDate}
+          onChange={(value) => setFormData((current) => ({ ...current, preferredDate: value }))}
+          type="date"
+        />
+        <SelectField
+          icon={<Clock3 className="h-4 w-4 text-gray-500" />}
+          label="Preferred Time"
+          placeholder="Time"
+          value={formData.preferredTime}
+          onValueChange={(value) => setFormData((current) => ({ ...current, preferredTime: value }))}
+          options={["Morning (9am-12pm)", "Afternoon (12pm-5pm)", "Evening (5pm-8pm)"]}
+        />
+      </div>
+      <TextareaField
+        label="Anything we should know?"
+        placeholder="Share any goals or questions you want to cover on the call."
+        value={formData.notes}
+        onChange={(value) => setFormData((current) => ({ ...current, notes: value }))}
+      />
+      <Button className="h-14 w-full rounded-xl bg-[#00FF85] text-base font-bold text-[#0A0A0B] hover:bg-[#00E077]">
+        Request My Call
+      </Button>
+    </form>
+  );
+}
 
-              {showInterest && (
-                <div className="space-y-2">
-                  <Label htmlFor={`${variant}-interest`} className={dark ? "text-white/80" : ""}>Why are you interested?</Label>
-                  <div className="relative">
-                    <MessageSquare className={`pointer-events-none absolute left-3 top-4 h-4 w-4 ${dark ? "text-white/35" : "text-slate-400"}`} />
-                    <Textarea id={`${variant}-interest`} required value={formState.interest} onChange={(event) => setFormState((current) => ({ ...current, interest: event.target.value }))} className={dark ? "min-h-[120px] rounded-[20px] border-white/10 bg-white/5 pl-10 text-white placeholder:text-white/35" : "min-h-[120px] rounded-[20px] border-slate-200 pl-10"} placeholder="Tell us what you are looking for" />
-                  </div>
-                </div>
-              )}
+export function WebinarForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    state: "",
+  });
 
-              <div className={`rounded-[22px] p-4 text-sm ${dark ? "bg-white/5 text-white/70" : "bg-slate-50 text-slate-600"}`}>
-                <div className="flex items-start gap-3">
-                  <Send className="mt-0.5 h-4 w-4 text-[#39f277]" />
-                  <p>Create or update lead records, assign the right pipeline stage, and trigger SMS + email follow-up automatically.</p>
-                </div>
-                <div className="mt-3 flex items-start gap-3">
-                  <CalendarRange className="mt-0.5 h-4 w-4 text-[#39f277]" />
-                  <p>Each cloned site can point to a different GoHighLevel or Builder CRM account by swapping tenant-level configuration.</p>
-                </div>
-              </div>
+  if (submitted) {
+    return (
+      <SuccessState
+        title="You're Registered"
+        body="Your webinar seat is reserved. Watch for an email and text reminder with the next session details."
+      />
+    );
+  }
 
-              <Button type="submit" className="h-12 w-full rounded-[16px] bg-[#39f277] text-base font-semibold text-[#04110a] hover:bg-[#4cf688]">
-                {ctaLabel}
-              </Button>
-            </form>
-          </>
-        )}
-      </CardContent>
-    </Card>
+  return (
+    <form
+      id="register-form"
+      className="space-y-5 rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8"
+      onSubmit={(event) => {
+        event.preventDefault();
+        setSubmitted(true);
+      }}
+    >
+      <TextField
+        icon={<UserRound className="h-4 w-4 text-gray-500" />}
+        label="Full Name *"
+        placeholder="Your full name"
+        value={formData.fullName}
+        onChange={(value) => setFormData((current) => ({ ...current, fullName: value }))}
+        required
+      />
+      <TextField
+        icon={<Mail className="h-4 w-4 text-gray-500" />}
+        label="Email *"
+        placeholder="your@email.com"
+        value={formData.email}
+        onChange={(value) => setFormData((current) => ({ ...current, email: value }))}
+        required
+        type="email"
+      />
+      <TextField
+        icon={<Phone className="h-4 w-4 text-gray-500" />}
+        label="Phone *"
+        placeholder="(555) 000-0000"
+        value={formData.phone}
+        onChange={(value) => setFormData((current) => ({ ...current, phone: value }))}
+        required
+        type="tel"
+      />
+      <SelectField
+        icon={<MapPin className="h-4 w-4 text-gray-500" />}
+        label="State"
+        placeholder="Select your state"
+        value={formData.state}
+        onValueChange={(value) => setFormData((current) => ({ ...current, state: value }))}
+        options={states}
+      />
+      <Button className="h-14 w-full rounded-xl bg-[#00FF85] text-base font-bold text-[#0A0A0B] hover:bg-[#00E077]">
+        YES! I WANT TO ATTEND
+      </Button>
+    </form>
+  );
+}
+
+type TextFieldProps = {
+  icon?: React.ReactNode;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  type?: string;
+  required?: boolean;
+};
+
+function TextField({ icon, label, value, onChange, placeholder, type = "text", required = false }: TextFieldProps) {
+  return (
+    <div className="space-y-2">
+      <Label className={labelClass}>
+        {icon}
+        <span>{label}</span>
+      </Label>
+      <Input
+        required={required}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => onChange(event.target.value)}
+        className={fieldClass}
+      />
+    </div>
+  );
+}
+
+type SelectFieldProps = {
+  icon?: React.ReactNode;
+  label: string;
+  placeholder: string;
+  value: string;
+  onValueChange: (value: string) => void;
+  options: string[];
+};
+
+function SelectField({ icon, label, placeholder, value, onValueChange, options }: SelectFieldProps) {
+  return (
+    <div className="space-y-2">
+      <Label className={labelClass}>
+        {icon}
+        <span>{label}</span>
+      </Label>
+      <Select value={value} onValueChange={onValueChange}>
+        <SelectTrigger className={fieldClass}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent className="max-h-60 border-white/10 bg-[#111214] text-white">
+          {options.map((option) => (
+            <SelectItem key={option} value={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+
+type TextareaFieldProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+};
+
+function TextareaField({ label, value, onChange, placeholder }: TextareaFieldProps) {
+  return (
+    <div className="space-y-2">
+      <Label className="text-gray-300">{label}</Label>
+      <Textarea
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => onChange(event.target.value)}
+        className="min-h-[140px] rounded-xl border-white/[0.08] bg-white/[0.04] text-white placeholder:text-gray-600 focus-visible:ring-[#00FF85]/20"
+      />
+    </div>
   );
 }

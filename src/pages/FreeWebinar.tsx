@@ -1,123 +1,150 @@
-import { ArrowRight, BadgeCheck, Clock3, ShieldCheck, Video } from "lucide-react";
+import { ArrowRight, Check, CheckCircle2 } from "lucide-react";
+import { WebinarForm } from "@/components/lead-forms";
 import { SiteShell } from "@/components/site-shell";
-import { LeadForm } from "@/components/lead-forms";
-import { Badge } from "@/components/ui/badge";
 
-const bullets = [
-  "See the exact path to start in life insurance even if you're brand new",
-  "Understand the systems, mentorship, and automation behind faster launch",
-  "Learn how discovery calls, licensing, and business setup fit together",
-  "Get clarity on whether this opportunity fits your goals and schedule",
+const painPoints = [
+  "You have big dreams, but the path you're on won't get you there.",
+  "After years in the workforce, you don't have much to show for it.",
+  'You often think, "There HAS to be more to life than this..."',
+  "You feel overworked and underpaid for the value you offer.",
+  "You desire more flexibility over when, where, and how much you work.",
+  "You're working hard at a job that you hate or that won't make you wealthy.",
+];
+
+const webinarBenefits = [
+  "How complete beginners get started in life insurance",
+  "What the MoneySmart Movement platform actually includes",
+  "How agents create side income or six-figure careers",
+  "The next steps for licensing, training, and mentorship",
 ];
 
 const FreeWebinar = () => {
+  const scrollToForm = () => {
+    document.getElementById("register-form")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <SiteShell>
-      <main className="bg-white">
-        <section className="pt-8 sm:pt-12">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-[2rem] border border-slate-200 bg-slate-950 px-6 py-8 text-white shadow-sm sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-              <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-                <div className="max-w-2xl">
-                  <Badge className="rounded-full border border-emerald-400/20 bg-emerald-500/15 px-4 py-1.5 text-emerald-300 hover:bg-emerald-500/15">
-                    Primary conversion event
-                  </Badge>
-                  <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                    Watch the Free Webinar and See How to Launch a Modern Life Insurance Business
-                  </h1>
-                  <p className="mt-5 text-lg leading-8 text-slate-300">
-                    A focused overview of the opportunity, support model, and next steps for motivated people ready to build income in a new career path.
-                  </p>
-                  <div className="mt-8 space-y-4">
-                    {bullets.map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-[1.5rem] bg-white/5 p-4">
-                        <BadgeCheck className="mt-0.5 h-5 w-5 text-emerald-300" />
-                        <p className="text-slate-200">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                    <div className="rounded-[1.5rem] bg-white/5 p-5">
-                      <p className="text-sm text-slate-400">Authority</p>
-                      <p className="mt-2 text-xl font-semibold">Established in 2012</p>
-                    </div>
-                    <div className="rounded-[1.5rem] bg-white/5 p-5">
-                      <p className="text-sm text-slate-400">Track record</p>
-                      <p className="mt-2 text-xl font-semibold">100,000+ helped enter the industry</p>
-                    </div>
-                    <div className="rounded-[1.5rem] bg-white/5 p-5">
-                      <p className="text-sm text-slate-400">Automations</p>
-                      <p className="mt-2 text-xl font-semibold">SMS + email reminders</p>
-                    </div>
-                  </div>
-                </div>
+      <div className="bg-[#0A0A0B]">
+        <div className="bg-[#00FF85] py-2.5 text-center">
+          <span className="text-sm font-bold uppercase tracking-widest text-[#0A0A0B]">
+            FREE LIVE WEBINAR - Limited Spots Available
+          </span>
+        </div>
 
-                <div className="rounded-[2rem] bg-white p-3 text-slate-900">
-                  <LeadForm
-                    variant="webinar"
-                    title="Register Now"
-                    description="Reserve your webinar spot and route your registration into CRM, reminders, and next-step follow-up."
-                    ctaLabel="Register Now"
-                    showInterest
-                  />
+        <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pb-24 pt-16">
+          <div className="absolute left-1/4 top-1/3 h-[600px] w-[600px] rounded-full bg-[#00FF85] opacity-[0.04] blur-[150px]" />
+          <div className="absolute bottom-0 right-1/4 h-[400px] w-[400px] rounded-full bg-[#00FF85] opacity-[0.03] blur-[120px]" />
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#00FF85]/20 bg-[#00FF85]/10 px-5 py-2">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-[#00FF85]" />
+              <span className="text-sm font-semibold uppercase tracking-wide text-[#00FF85]">Free Live Training</span>
+            </div>
+            <h1 className="mb-8 text-5xl font-bold leading-[1] tracking-tight md:text-6xl lg:text-7xl">
+              <span className="text-white">How To Launch a</span>
+              <br />
+              <span className="bg-gradient-to-r from-[#00FF85] to-[#00CC6A] bg-clip-text text-transparent">
+                Life Insurance Career
+              </span>
+              <br />
+              <span className="text-white">Without Experience,</span>
+              <br />
+              <span className="text-white">Time, or Much Money</span>
+            </h1>
+            <p className="mx-auto mb-10 max-w-3xl text-xl leading-relaxed text-gray-300 md:text-2xl">
+              Whether you want to build a <span className="font-semibold text-[#00FF85]">side income</span> or a{" "}
+              <span className="font-semibold text-[#00FF85]">6-figure business</span>, attend our FREE live webinar to
+              discover how simple it really is.
+            </p>
+            <button
+              type="button"
+              onClick={scrollToForm}
+              className="animate-pulse-green inline-flex items-center gap-3 rounded-2xl bg-[#00FF85] px-10 py-5 text-xl font-bold text-[#0A0A0B] transition-all duration-300 hover:bg-[#00E077] hover:shadow-[0_0_60px_rgba(0,255,133,0.4)]"
+            >
+              YES! I WANT TO ATTEND
+              <ArrowRight className="h-6 w-6" />
+            </button>
+          </div>
+        </section>
+
+        <section className="bg-[#0F2922] px-6 py-24">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-14 text-center">
+              <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">Can You Relate?</h2>
+              <p className="text-lg text-gray-400">If any of these sound familiar, this webinar was made for you.</p>
+            </div>
+            <div className="space-y-4">
+              {painPoints.map((point) => (
+                <div
+                  key={point}
+                  className="flex items-start gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5 transition-colors hover:border-[#00FF85]/15"
+                >
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#00FF85]/15">
+                    <Check className="h-4 w-4 text-[#00FF85]" />
+                  </div>
+                  <span className="text-lg leading-relaxed text-white/90">{point}</span>
                 </div>
-              </div>
+              ))}
+            </div>
+            <div className="mt-14 text-center">
+              <p className="mb-4 text-2xl font-bold text-white md:text-3xl">If Any of This Struck a Chord With You...</p>
+              <p className="mx-auto mb-8 max-w-2xl text-xl text-gray-400">
+                You owe it to yourself to discover how thousands of people just like you have built a life of{" "}
+                <span className="font-semibold text-[#00FF85]">income, freedom, and purpose</span> through life
+                insurance.
+              </p>
+              <button
+                type="button"
+                onClick={scrollToForm}
+                className="inline-flex items-center gap-3 rounded-2xl bg-[#00FF85] px-10 py-5 text-xl font-bold text-[#0A0A0B] transition-all hover:bg-[#00E077]"
+              >
+                YES! I WANT TO ATTEND
+                <ArrowRight className="h-6 w-6" />
+              </button>
             </div>
           </div>
         </section>
 
-        <section className="py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
-                <div className="flex items-center gap-3 text-emerald-600">
-                  <Video className="h-5 w-5" />
-                  <p className="text-sm font-semibold uppercase tracking-[0.24em]">Webinar preview</p>
-                </div>
-                <div className="mt-6 flex min-h-[320px] items-center justify-center rounded-[1.75rem] bg-slate-50 p-8 text-center text-slate-900">
-                  <div>
-                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white">
-                      <Video className="h-7 w-7" />
-                    </div>
-                    <h2 className="mt-6 text-2xl font-semibold">Modern overview, simple next steps</h2>
-                    <p className="mt-3 max-w-md text-sm leading-7 text-slate-600">
-                      This block is ready for your webinar embed or short intro video while preserving the same high-converting content structure.
-                    </p>
+        <section className="px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
+              <span className="mb-4 block font-mono text-sm uppercase tracking-widest text-[#00FF85]">// what_you_get</span>
+              <h2 className="text-4xl font-bold text-white md:text-5xl">What You'll Learn In The Webinar</h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              {webinarBenefits.map((item) => (
+                <div key={item} className="rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8">
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#00FF85]/10">
+                    <CheckCircle2 className="h-6 w-6 text-[#00FF85]" />
                   </div>
+                  <p className="text-lg leading-relaxed text-white">{item}</p>
                 </div>
-              </div>
-
-              <div className="space-y-5">
-                <div className="rounded-[2rem] bg-emerald-500 p-7 text-white">
-                  <div className="flex items-center gap-3">
-                    <Clock3 className="h-5 w-5" />
-                    <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-100">Urgency</p>
-                  </div>
-                  <h3 className="mt-4 text-2xl font-semibold">Seats are limited for the next session.</h3>
-                  <p className="mt-3 text-sm leading-7 text-emerald-50">
-                    Register now to receive the webinar access link, automated reminders, and follow-up instructions for the next step.
-                  </p>
-                </div>
-                <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-7">
-                  <div className="flex items-center gap-3 text-slate-900">
-                    <ShieldCheck className="h-5 w-5 text-emerald-600" />
-                    <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">What happens next</p>
-                  </div>
-                  <div className="mt-5 space-y-4 text-sm leading-7 text-slate-600">
-                    <p>1. Your registration enters the webinar pipeline stage.</p>
-                    <p>2. SMS and email reminders are triggered automatically.</p>
-                    <p>3. Qualified attendees are invited into the discovery call flow.</p>
-                  </div>
-                  <a href="#top" className="mt-6 inline-flex items-center text-sm font-medium text-emerald-600">
-                    Register above
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
-      </main>
+
+        <section className="bg-[#0F2922] px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-10 text-center">
+              <span className="mb-4 block font-mono text-sm uppercase tracking-widest text-[#00FF85]">// register_now</span>
+              <h2 className="text-4xl font-bold text-white md:text-5xl">Reserve Your Seat</h2>
+              <p className="mt-4 text-lg text-gray-400">
+                Limited spots are available for each live session. Register now to lock in your seat.
+              </p>
+            </div>
+            <WebinarForm />
+          </div>
+        </section>
+      </div>
     </SiteShell>
   );
 };

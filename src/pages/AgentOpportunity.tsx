@@ -1,48 +1,103 @@
-import { ArrowRight, BadgeCheck, BriefcaseBusiness, GraduationCap, Handshake, Workflow } from "lucide-react";
+import { BriefcaseBusiness, CalendarClock, GraduationCap, HandCoins, Rocket, Workflow } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiteShell } from "@/components/site-shell";
-import { Button } from "@/components/ui/button";
 
-const highlights = [
-  { title: "Career launch path", icon: BriefcaseBusiness, text: "A modern entry point into the life insurance business for people ready to build something substantial." },
-  { title: "Training and mentorship", icon: GraduationCap, text: "Structured guidance from first steps through licensing, launch, and early production." },
-  { title: "Supportive growth model", icon: Handshake, text: "Work with systems and people designed to help you stay focused and in motion." },
-  { title: "Automation and workflow", icon: Workflow, text: "Builder CRM, reminders, follow-up flows, and booking systems create momentum." },
+const careerCards = [
+  {
+    icon: HandCoins,
+    title: "High-Income Potential",
+    description: "New entrants can earn six figures in their first year with the right training and systems.",
+  },
+  {
+    icon: BriefcaseBusiness,
+    title: "Flexible Career Path",
+    description: "Build part-time or full-time while creating a business that can scale with your goals.",
+  },
+  {
+    icon: Workflow,
+    title: "Modern Infrastructure",
+    description: "Automation, CRM workflows, and lead systems replace outdated prospecting methods.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Hands-On Training",
+    description: "Get a step-by-step path from getting started to writing business confidently.",
+  },
+  {
+    icon: Rocket,
+    title: "Fast Start Support",
+    description: "Launch with mentorship, accountability, and clear next steps from day one.",
+  },
+  {
+    icon: CalendarClock,
+    title: "Lifestyle Freedom",
+    description: "Create a schedule and income path that gives you more ownership over your life.",
+  },
+];
+
+const dayTimeline = [
+  { time: "9:00 AM", activity: "Check leads, follow-ups, and appointments for the day.", color: "bg-[#00FF85]" },
+  { time: "11:00 AM", activity: "Connect with prospects and schedule consultations.", color: "bg-emerald-400" },
+  { time: "2:00 PM", activity: "Attend training, coaching, or product education.", color: "bg-lime-400" },
+  { time: "5:00 PM", activity: "Meet with clients and help families protect what matters.", color: "bg-green-300" },
 ];
 
 const AgentOpportunity = () => {
   return (
     <SiteShell>
-      <main className="bg-white">
-        <section className="bg-slate-50 py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="bg-[#0A0A0B]">
+        <section className="px-6 pb-20 pt-32">
+          <div className="mx-auto max-w-7xl">
             <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-600">Agent opportunity</p>
-              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-                A Better Entry Into the Life Insurance Industry
+              <span className="mb-4 block font-mono text-sm uppercase tracking-widest text-[#00FF85]">// agent_opportunity</span>
+              <h1 className="mb-6 text-5xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl">
+                Build a Career That{" "}
+                <span className="bg-gradient-to-r from-[#00FF85] to-[#00CC6A] bg-clip-text text-transparent">
+                  Pays You What You're Worth
+                </span>
               </h1>
-              <p className="mt-5 text-lg leading-8 text-slate-600">
-                Built for motivated people pursuing a new career path, a second income stream, or an entrepreneurial business with modern infrastructure behind it.
+              <p className="mb-10 text-xl leading-relaxed text-gray-400">
+                Life insurance is a trillion-dollar industry and one of the few career paths where new entrants can
+                earn six figures in their first year with the right training and systems.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild className="rounded-full bg-emerald-500 px-6 text-white hover:bg-emerald-600">
-                  <Link to="/free-webinar">Watch Free Webinar</Link>
-                </Button>
-                <Button asChild variant="outline" className="rounded-full border-slate-300 px-6 text-slate-800">
-                  <Link to="/apply-now">Apply Now</Link>
-                </Button>
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <Link
+                  to="/FreeWebinar"
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#00FF85] px-8 py-4 text-lg font-semibold text-[#0A0A0B] transition-all hover:bg-[#00E077]"
+                >
+                  Watch the Free Webinar
+                </Link>
+                <Link
+                  to="/ApplyNow"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 px-8 py-4 text-lg font-semibold text-white transition-all hover:border-[#00FF85]/30"
+                >
+                  Apply Now
+                </Link>
               </div>
             </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {highlights.map((item) => {
-                const Icon = item.icon;
+          </div>
+        </section>
+
+        <section className="bg-[#F4F7F6] px-6 py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl font-bold tracking-tight text-[#0A0A0B] md:text-5xl">
+                Why Life Insurance Is a{" "}
+                <span className="bg-gradient-to-r from-[#0F2922] to-[#00CC6A] bg-clip-text text-transparent">
+                  Powerful Career
+                </span>
+              </h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {careerCards.map((card) => {
+                const Icon = card.icon;
                 return (
-                  <div key={item.title} className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_50px_rgba(15,23,42,0.05)]">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
-                      <Icon className="h-5 w-5" />
+                  <div key={card.title} className="group rounded-3xl border border-gray-100 bg-white p-8 transition-all duration-500 hover:shadow-lg">
+                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0A0A0B] transition-colors group-hover:bg-[#0F2922]">
+                      <Icon className="h-6 w-6 text-[#00FF85]" />
                     </div>
-                    <h2 className="mt-5 text-xl font-semibold text-slate-900">{item.title}</h2>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.text}</p>
+                    <h3 className="mb-2 text-xl font-bold text-[#0A0A0B]">{card.title}</h3>
+                    <p className="leading-relaxed text-gray-500">{card.description}</p>
                   </div>
                 );
               })}
@@ -50,27 +105,42 @@ const AgentOpportunity = () => {
           </div>
         </section>
 
-        <section className="bg-white py-16 sm:py-20">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
-            {[
-              "You do not need prior insurance experience to begin.",
-              "You can start with a part-time or full-time plan.",
-              "Your next best step is the webinar, then a discovery conversation.",
-            ].map((item) => (
-              <div key={item} className="rounded-[2rem] bg-slate-950 p-6 text-white">
-                <BadgeCheck className="h-6 w-6 text-emerald-300" />
-                <p className="mt-4 text-base leading-8">{item}</p>
-              </div>
-            ))}
+        <section className="px-6 py-24">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-16 text-center">
+              <span className="mb-4 block font-mono text-sm uppercase tracking-widest text-[#00FF85]">// a_day_in_the_life</span>
+              <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">What a Typical Day Looks Like</h2>
+            </div>
+            <div className="space-y-4">
+              {dayTimeline.map((item) => (
+                <div
+                  key={`${item.time}-${item.activity}`}
+                  className="flex items-center gap-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 transition-all hover:border-[#00FF85]/15"
+                >
+                  <div className={`h-3 w-3 shrink-0 rounded-full ${item.color}`} />
+                  <span className="w-20 shrink-0 font-mono text-sm text-gray-500">{item.time}</span>
+                  <span className="text-lg text-white">{item.activity}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Link to="/free-webinar" className="inline-flex items-center text-sm font-semibold text-emerald-600">
-              Move into the webinar funnel
-              <ArrowRight className="ml-2 h-4 w-4" />
+        </section>
+
+        <section className="bg-[#0F2922] px-6 py-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">Ready to Take the First Step?</h2>
+            <p className="mb-10 text-lg text-gray-400">
+              No experience needed. We provide everything you need to start building a profitable insurance business.
+            </p>
+            <Link
+              to="/FreeWebinar"
+              className="inline-flex items-center rounded-2xl bg-[#00FF85] px-10 py-5 text-lg font-semibold text-[#0A0A0B] transition-all hover:bg-[#00E077]"
+            >
+              Watch the Free Webinar
             </Link>
           </div>
         </section>
-      </main>
+      </div>
     </SiteShell>
   );
 };

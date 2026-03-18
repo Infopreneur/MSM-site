@@ -1,29 +1,22 @@
 import { SiteShell } from "@/components/site-shell";
-import { LeadForm } from "@/components/lead-forms";
+import { ApplicationForm } from "@/components/lead-forms";
 
 const ApplyNow = () => {
   return (
     <SiteShell>
-      <main className="bg-slate-50 py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-600">Apply now</p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-              Start Your Agent Application
-            </h1>
-            <p className="mt-5 text-lg leading-8 text-slate-600">
-              Submit your information to enter the application flow, route into CRM, and receive next-step communication.
+      <div className="min-h-screen bg-[#0A0A0B] px-6 pb-20 pt-28">
+        <div className="mx-auto max-w-2xl">
+          <div className="mb-12">
+            <span className="mb-4 block font-mono text-sm uppercase tracking-widest text-[#00FF85]">// apply_now</span>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl">Start Your Application</h1>
+            <p className="text-lg leading-relaxed text-gray-400">
+              Take the first step toward building your life insurance career. Fill out the form below and we'll be in
+              touch.
             </p>
           </div>
-          <LeadForm
-            variant="application"
-            title="Agent Application"
-            description="Complete the short application and we will route your submission for review, follow-up, and next steps."
-            ctaLabel="Submit Application"
-            showInterest
-          />
+          <ApplicationForm />
         </div>
-      </main>
+      </div>
     </SiteShell>
   );
 };
