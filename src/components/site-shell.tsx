@@ -1,7 +1,8 @@
 import { Menu, X } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "@/assets/favicon-msm.png";
+
+const logo = "/favicon.ico";
 
 type SiteShellProps = {
   children: ReactNode;
