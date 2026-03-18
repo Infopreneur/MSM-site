@@ -1,6 +1,6 @@
-import { Sparkles } from "lucide-react";
-import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
+import { ReactNode, useState } from "react";
+import logo from "@/assets/favicon-msm.png";
 import { Button } from "@/components/ui/button";
 
 type SiteShellProps = {
@@ -8,66 +8,88 @@ type SiteShellProps = {
 };
 
 const navItems = [
-  { label: "Agent Opportunity", to: "/agent-opportunity" },
-  { label: "About Platform", to: "/about-platform" },
-  { label: "Insurance Solutions", to: "/insurance-solutions" },
-  { label: "Free Webinar", to: "/free-webinar" },
+  { label: "Free Webinar", to: "#webinar" },
+  { label: "Agent Opportunity", to: "#opportunity" },
+  { label: "About", to: "#about" },
+  { label: "Insurance Solutions", to: "#insurance" },
 ];
 
 export function SiteShell({ children }: SiteShellProps) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-emerald-500 text-white shadow-[0_18px_50px_rgba(16,185,129,0.28)]">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-600">MoneySmart Movement</p>
-              <p className="text-xs text-slate-500">Modern recruiting + growth platform</p>
-            </div>
-          </Link>
+    <div className="min-h-screen bg-[#050607] text-white">
+      <header className="sticky top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
+        <div className="mx-auto max-w-[1260px]">
+          <div className="rounded-[24px] border border-white/6 bg-[#090b0d]/95 px-4 py-3 shadow-[0_10px_60px_rgba(0,0,0,0.35)] backdrop-blur md:px-6">
+            <div className="flex items-center justify-between gap-3">
+              <a href="#top" className="flex min-w-0 items-center gap-3">
+                <img src={logo} alt="MoneySmart Movement" className="h-10 w-10 rounded-full border border-white/10 bg-white object-cover" />
+                <span className="truncate text-sm font-semibold tracking-[-0.02em] text-white sm:text-[18px]">MoneySmart Movement</span>
+              </a>
 
-          <nav className="hidden items-center rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm lg:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-950"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+              <nav className="hidden items-center gap-8 lg:flex">
+                {navItems.map((item) => (
+                  <a key={item.label} href={item.to} className="text-[15px] font-medium text-white/70 transition hover:text-white">
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
 
-          <div className="flex items-center gap-3">
-            <Button asChild variant="outline" className="hidden rounded-full border-slate-200 bg-white px-5 text-slate-700 md:inline-flex">
-              <Link to="/book-a-call">Book a Call</Link>
-            </Button>
-            <Button asChild className="rounded-full bg-emerald-500 px-5 text-white shadow-[0_18px_35px_rgba(16,185,129,0.28)] hover:bg-emerald-600">
-              <Link to="/free-webinar">Watch Free Webinar</Link>
-            </Button>
+              <div className="flex items-center gap-2">
+                <Button asChild className="hidden h-12 rounded-[16px] bg-[#39f277] px-6 text-[15px] font-semibold text-[#04110a] shadow-none hover:bg-[#4cf688] sm:inline-flex">
+                  <a href="#apply">Apply Now</a>
+                </Button>
+                <button
+                  type="button"
+                  aria-label="Toggle navigation"
+                  onClick={() => setMobileOpen((current) => !current)}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-[14px] border border-white/10 bg-white/5 text-white lg:hidden"
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {mobileOpen && (
+              <div className="mt-4 space-y-2 border-t border-white/8 pt-4 lg:hidden">
+                {navItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-[14px] px-3 py-3 text-sm font-medium text-white/78 transition hover:bg-white/5 hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href="#apply"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-2 block rounded-[14px] bg-[#39f277] px-4 py-3 text-center text-sm font-semibold text-[#04110a]"
+                >
+                  Apply Now
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </header>
       {children}
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-8">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <footer className="border-t border-white/6 bg-[#050607]">
+        <div className="mx-auto max-w-[1260px] px-4 py-10 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-5 rounded-[28px] border border-white/6 bg-[#090b0d] px-6 py-7 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="MoneySmart Movement" className="h-10 w-10 rounded-full border border-white/10 bg-white object-cover" />
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-600">MoneySmart Movement</p>
-                <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
-                  A modern platform for launching a life insurance career and guiding consumers toward education-first protection and annuity solutions.
-                </p>
+                <p className="text-base font-semibold text-white">MoneySmart Movement</p>
+                <p className="text-sm text-white/50">Established 2012 • 100,000+ people helped enter the industry</p>
               </div>
-              <div className="flex flex-wrap gap-3 text-sm text-slate-600">
-                <Link to="/free-webinar" className="rounded-full bg-white px-4 py-2 hover:text-slate-950">Free Webinar</Link>
-                <Link to="/apply-now" className="rounded-full bg-white px-4 py-2 hover:text-slate-950">Apply Now</Link>
-                <Link to="/book-a-call" className="rounded-full bg-white px-4 py-2 hover:text-slate-950">Book a Call</Link>
-                <Link to="/insurance-solutions" className="rounded-full bg-white px-4 py-2 hover:text-slate-950">Insurance Solutions</Link>
-              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 text-sm text-white/60">
+              <a href="#webinar" className="transition hover:text-white">Free Webinar</a>
+              <a href="#insurance" className="transition hover:text-white">Insurance Solutions</a>
+              <a href="#apply" className="transition hover:text-white">Apply Now</a>
             </div>
           </div>
         </div>

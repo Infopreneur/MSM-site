@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { CalendarRange, CheckCircle2, Globe2, Mail, MessageSquare, Phone, Send, UserRound } from "lucide-react";
+import { CalendarRange, CheckCircle2, Mail, MessageSquare, Phone, Send, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -15,6 +15,7 @@ type LeadFormProps = {
   description: string;
   ctaLabel: string;
   showInterest?: boolean;
+  dark?: boolean;
 };
 
 const baseConfig = {
@@ -36,7 +37,7 @@ const baseConfig = {
   },
 };
 
-export function LeadForm({ variant, title, description, ctaLabel, showInterest = false }: LeadFormProps) {
+export function LeadForm({ variant, title, description, ctaLabel, showInterest = false, dark = false }: LeadFormProps) {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -70,162 +71,134 @@ export function LeadForm({ variant, title, description, ctaLabel, showInterest =
     setSubmitted(true);
   };
 
+  const cardClass = dark
+    ? "rounded-[28px] border border-white/10 bg-[#0b0d0f] text-white shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+    : "rounded-[28px] border border-slate-200 bg-white text-slate-950 shadow-[0_24px_70px_rgba(15,23,42,0.08)]";
+
+  const inputClass = dark
+    ? "rounded-[18px] border-white/10 bg-white/5 pl-10 text-white placeholder:text-white/35"
+    : "rounded-[18px] border-slate-200 pl-10";
+
   return (
-    <Card className="rounded-[2rem] border-0 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
-      <CardHeader className="space-y-3 p-6 sm:p-8">
-        <div className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-700">
-          {pipelineStage}
-        </div>
-        <CardTitle className="text-2xl font-semibold tracking-tight text-slate-950">{title}</CardTitle>
-        <p className="text-sm leading-7 text-slate-600">{description}</p>
-      </CardHeader>
-      <CardContent className="p-6 pt-0 sm:p-8 sm:pt-0">
+    <Card className={cardClass}>
+      <CardContent className="p-5 sm:p-7">
         {submitted ? (
-          <div className="rounded-[1.5rem] bg-emerald-50 p-6 text-left">
-            <CheckCircle2 className="h-10 w-10 text-emerald-600" />
-            <h3 className="mt-4 text-xl font-semibold text-slate-950">You're in.</h3>
-            <p className="mt-2 text-sm leading-7 text-slate-600">
-              Your information is ready for CRM routing, pipeline placement, and automated follow-up.
+          <div className={`rounded-[24px] p-6 ${dark ? "bg-[#101416]" : "bg-emerald-50"}`}>
+            <CheckCircle2 className="h-10 w-10 text-[#39f277]" />
+            <h3 className={`mt-4 text-2xl font-semibold ${dark ? "text-white" : "text-slate-950"}`}>You&apos;re in.</h3>
+            <p className={`mt-2 text-sm leading-7 ${dark ? "text-white/70" : "text-slate-600"}`}>
+              Your information is ready for lead creation, pipeline assignment, SMS follow-up, email nurture, and calendar booking.
             </p>
-            <div className="mt-5 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
-              <div className="rounded-2xl bg-white p-4">
-                <p className="font-medium">CRM provider</p>
-                <p className="mt-1 text-slate-500">{baseConfig.crmProvider}</p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className={`rounded-[20px] p-4 ${dark ? "bg-white/5" : "bg-white"}`}>
+                <p className={`font-medium ${dark ? "text-white" : "text-slate-950"}`}>CRM provider</p>
+                <p className={`mt-1 text-sm ${dark ? "text-white/55" : "text-slate-500"}`}>{baseConfig.crmProvider}</p>
               </div>
-              <div className="rounded-2xl bg-white p-4">
-                <p className="font-medium">Tenant ready</p>
-                <p className="mt-1 text-slate-500">Clone with a new tenantId + webhook URL</p>
+              <div className={`rounded-[20px] p-4 ${dark ? "bg-white/5" : "bg-white"}`}>
+                <p className={`font-medium ${dark ? "text-white" : "text-slate-950"}`}>Multi-tenant ready</p>
+                <p className={`mt-1 text-sm ${dark ? "text-white/55" : "text-slate-500"}`}>Clone and swap tenantId, webhook URL, and workflow mapping.</p>
               </div>
             </div>
           </div>
         ) : (
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor={`${variant}-name`}>Name</Label>
-                <div className="relative">
-                  <UserRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <Input
-                    id={`${variant}-name`}
-                    required
-                    value={formState.name}
-                    onChange={(event) => setFormState((current) => ({ ...current, name: event.target.value }))}
-                    className="rounded-2xl border-slate-200 pl-10"
-                    placeholder="Your full name"
-                  />
-                </div>
+          <>
+            <div className="mb-5">
+              <div className={`inline-flex rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] ${dark ? "bg-[#102117] text-[#7ef9a7]" : "bg-emerald-50 text-emerald-700"}`}>
+                {pipelineStage}
               </div>
-              <div className="space-y-2">
-                <Label htmlFor={`${variant}-email`}>Email</Label>
-                <div className="relative">
-                  <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <Input
-                    id={`${variant}-email`}
-                    type="email"
-                    required
-                    value={formState.email}
-                    onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))}
-                    className="rounded-2xl border-slate-200 pl-10"
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
+              <h3 className={`mt-4 text-[28px] font-semibold leading-[1.08] tracking-[-0.03em] ${dark ? "text-white" : "text-slate-950"}`}>{title}</h3>
+              <p className={`mt-3 text-sm leading-7 ${dark ? "text-white/68" : "text-slate-600"}`}>{description}</p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor={`${variant}-phone`}>Phone</Label>
-                <div className="relative">
-                  <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <Input
-                    id={`${variant}-phone`}
-                    required
-                    value={formState.phone}
-                    onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))}
-                    className="rounded-2xl border-slate-200 pl-10"
-                    placeholder="(555) 555-5555"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor={`${variant}-state`}>State</Label>
-                <div className="relative">
-                  <Globe2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <Input
-                    id={`${variant}-state`}
-                    required
-                    value={formState.state}
-                    onChange={(event) => setFormState((current) => ({ ...current, state: event.target.value }))}
-                    className="rounded-2xl border-slate-200 pl-10"
-                    placeholder="Your state"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {(variant === "application" || variant === "webinar" || variant === "call") && (
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label>Licensed?</Label>
-                  <Select value={formState.licensed} onValueChange={(value) => setFormState((current) => ({ ...current, licensed: value }))}>
-                    <SelectTrigger className="rounded-2xl border-slate-200">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Yes">Yes</SelectItem>
-                      <SelectItem value="No">No</SelectItem>
-                      <SelectItem value="In Progress">In Progress</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor={`${variant}-name`} className={dark ? "text-white/80" : ""}>Name</Label>
+                  <div className="relative">
+                    <UserRound className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${dark ? "text-white/35" : "text-slate-400"}`} />
+                    <Input id={`${variant}-name`} required value={formState.name} onChange={(event) => setFormState((current) => ({ ...current, name: event.target.value }))} className={inputClass} placeholder="Your full name" />
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Full-time or Part-time</Label>
-                  <Select value={formState.schedule} onValueChange={(value) => setFormState((current) => ({ ...current, schedule: value }))}>
-                    <SelectTrigger className="rounded-2xl border-slate-200">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Full-time">Full-time</SelectItem>
-                      <SelectItem value="Part-time">Part-time</SelectItem>
-                      <SelectItem value="Exploring">Exploring</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor={`${variant}-email`} className={dark ? "text-white/80" : ""}>Email</Label>
+                  <div className="relative">
+                    <Mail className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${dark ? "text-white/35" : "text-slate-400"}`} />
+                    <Input id={`${variant}-email`} type="email" required value={formState.email} onChange={(event) => setFormState((current) => ({ ...current, email: event.target.value }))} className={inputClass} placeholder="you@example.com" />
+                  </div>
                 </div>
               </div>
-            )}
 
-            {showInterest && (
-              <div className="space-y-2">
-                <Label htmlFor={`${variant}-interest`}>Why are you interested?</Label>
-                <div className="relative">
-                  <MessageSquare className="pointer-events-none absolute left-3 top-4 h-4 w-4 text-slate-400" />
-                  <Textarea
-                    id={`${variant}-interest`}
-                    required
-                    value={formState.interest}
-                    onChange={(event) => setFormState((current) => ({ ...current, interest: event.target.value }))}
-                    className="min-h-[120px] rounded-[1.5rem] border-slate-200 pl-10"
-                    placeholder="Tell us what opportunity or solution you're looking for"
-                  />
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor={`${variant}-phone`} className={dark ? "text-white/80" : ""}>Phone</Label>
+                  <div className="relative">
+                    <Phone className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${dark ? "text-white/35" : "text-slate-400"}`} />
+                    <Input id={`${variant}-phone`} required value={formState.phone} onChange={(event) => setFormState((current) => ({ ...current, phone: event.target.value }))} className={inputClass} placeholder="(555) 555-5555" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`${variant}-state`} className={dark ? "text-white/80" : ""}>State</Label>
+                  <Input id={`${variant}-state`} required value={formState.state} onChange={(event) => setFormState((current) => ({ ...current, state: event.target.value }))} className={dark ? "rounded-[18px] border-white/10 bg-white/5 text-white placeholder:text-white/35" : "rounded-[18px] border-slate-200"} placeholder="Your state" />
                 </div>
               </div>
-            )}
 
-            <div className="rounded-[1.5rem] bg-slate-50 p-4 text-sm text-slate-600">
-              <div className="flex items-start gap-3">
-                <Send className="mt-0.5 h-4 w-4 text-emerald-600" />
-                <p>Submission is structured for CRM routing, pipeline stages, SMS follow-up, email nurturing, and calendar booking.</p>
-              </div>
-              <div className="mt-3 flex items-start gap-3">
-                <CalendarRange className="mt-0.5 h-4 w-4 text-emerald-600" />
-                <p>Multi-tenant ready: each cloned site only needs its own tenantId, webhook URL, calendar URL, and webinar URL.</p>
-              </div>
-            </div>
+              {(variant === "application" || variant === "webinar" || variant === "call") && (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label className={dark ? "text-white/80" : ""}>Licensed?</Label>
+                    <Select value={formState.licensed} onValueChange={(value) => setFormState((current) => ({ ...current, licensed: value }))}>
+                      <SelectTrigger className={dark ? "rounded-[18px] border-white/10 bg-white/5 text-white" : "rounded-[18px] border-slate-200"}>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Yes">Yes</SelectItem>
+                        <SelectItem value="No">No</SelectItem>
+                        <SelectItem value="In Progress">In Progress</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className={dark ? "text-white/80" : ""}>Full-time or Part-time</Label>
+                    <Select value={formState.schedule} onValueChange={(value) => setFormState((current) => ({ ...current, schedule: value }))}>
+                      <SelectTrigger className={dark ? "rounded-[18px] border-white/10 bg-white/5 text-white" : "rounded-[18px] border-slate-200"}>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Full-time">Full-time</SelectItem>
+                        <SelectItem value="Part-time">Part-time</SelectItem>
+                        <SelectItem value="Exploring">Exploring</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
 
-            <Button type="submit" className="w-full rounded-full bg-emerald-500 py-6 text-base text-white hover:bg-emerald-600">
-              {ctaLabel}
-            </Button>
-          </form>
+              {showInterest && (
+                <div className="space-y-2">
+                  <Label htmlFor={`${variant}-interest`} className={dark ? "text-white/80" : ""}>Why are you interested?</Label>
+                  <div className="relative">
+                    <MessageSquare className={`pointer-events-none absolute left-3 top-4 h-4 w-4 ${dark ? "text-white/35" : "text-slate-400"}`} />
+                    <Textarea id={`${variant}-interest`} required value={formState.interest} onChange={(event) => setFormState((current) => ({ ...current, interest: event.target.value }))} className={dark ? "min-h-[120px] rounded-[20px] border-white/10 bg-white/5 pl-10 text-white placeholder:text-white/35" : "min-h-[120px] rounded-[20px] border-slate-200 pl-10"} placeholder="Tell us what you are looking for" />
+                  </div>
+                </div>
+              )}
+
+              <div className={`rounded-[22px] p-4 text-sm ${dark ? "bg-white/5 text-white/70" : "bg-slate-50 text-slate-600"}`}>
+                <div className="flex items-start gap-3">
+                  <Send className="mt-0.5 h-4 w-4 text-[#39f277]" />
+                  <p>Create or update lead records, assign the right pipeline stage, and trigger SMS + email follow-up automatically.</p>
+                </div>
+                <div className="mt-3 flex items-start gap-3">
+                  <CalendarRange className="mt-0.5 h-4 w-4 text-[#39f277]" />
+                  <p>Each cloned site can point to a different GoHighLevel or Builder CRM account by swapping tenant-level configuration.</p>
+                </div>
+              </div>
+
+              <Button type="submit" className="h-12 w-full rounded-[16px] bg-[#39f277] text-base font-semibold text-[#04110a] hover:bg-[#4cf688]">
+                {ctaLabel}
+              </Button>
+            </form>
+          </>
         )}
       </CardContent>
     </Card>
