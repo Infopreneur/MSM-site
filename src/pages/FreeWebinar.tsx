@@ -16,13 +16,13 @@ const FreeWebinar = () => {
       <main className="bg-white">
         <section className="pt-8 sm:pt-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 px-6 py-8 text-white shadow-[0_30px_90px_rgba(15,23,42,0.14)] sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+            <div className="rounded-[2rem] border border-slate-200 bg-slate-950 px-6 py-8 text-white shadow-sm sm:px-8 sm:py-10 lg:px-10 lg:py-12">
               <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-start">
                 <div className="max-w-2xl">
                   <Badge className="rounded-full border border-emerald-400/20 bg-emerald-500/15 px-4 py-1.5 text-emerald-300 hover:bg-emerald-500/15">
                     Primary conversion event
                   </Badge>
-                  <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-[3.4rem]">
+                  <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
                     Watch the Free Webinar and See How to Launch a Modern Life Insurance Business
                   </h1>
                   <p className="mt-5 text-lg leading-8 text-slate-300">
@@ -30,29 +30,29 @@ const FreeWebinar = () => {
                   </p>
                   <div className="mt-8 space-y-4">
                     {bullets.map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-[1.5rem] border border-white/8 bg-white/5 p-4">
+                      <div key={item} className="flex items-start gap-3 rounded-[1.5rem] bg-white/5 p-4">
                         <BadgeCheck className="mt-0.5 h-5 w-5 text-emerald-300" />
                         <p className="text-slate-200">{item}</p>
                       </div>
                     ))}
                   </div>
                   <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                    <div className="rounded-[1.5rem] border border-white/8 bg-white/5 p-5">
+                    <div className="rounded-[1.5rem] bg-white/5 p-5">
                       <p className="text-sm text-slate-400">Authority</p>
                       <p className="mt-2 text-xl font-semibold">Established in 2012</p>
                     </div>
-                    <div className="rounded-[1.5rem] border border-white/8 bg-white/5 p-5">
+                    <div className="rounded-[1.5rem] bg-white/5 p-5">
                       <p className="text-sm text-slate-400">Track record</p>
                       <p className="mt-2 text-xl font-semibold">100,000+ helped enter the industry</p>
                     </div>
-                    <div className="rounded-[1.5rem] border border-white/8 bg-white/5 p-5">
+                    <div className="rounded-[1.5rem] bg-white/5 p-5">
                       <p className="text-sm text-slate-400">Automations</p>
                       <p className="mt-2 text-xl font-semibold">SMS + email reminders</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="rounded-[2rem] border border-white/10 bg-white p-3 text-slate-900 shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
+                <div className="rounded-[2rem] bg-white p-3 text-slate-900">
                   <LeadForm
                     variant="webinar"
                     title="Register Now"
@@ -69,14 +69,14 @@ const FreeWebinar = () => {
         <section className="py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(15,23,42,0.05)]">
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
                 <div className="flex items-center gap-3 text-emerald-600">
                   <Video className="h-5 w-5" />
                   <p className="text-sm font-semibold uppercase tracking-[0.24em]">Webinar preview</p>
                 </div>
                 <div className="mt-6 flex min-h-[320px] items-center justify-center rounded-[1.75rem] bg-slate-50 p-8 text-center text-slate-900">
                   <div>
-                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_20px_40px_rgba(16,185,129,0.24)]">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white">
                       <Video className="h-7 w-7" />
                     </div>
                     <h2 className="mt-6 text-2xl font-semibold">Modern overview, simple next steps</h2>
@@ -88,7 +88,7 @@ const FreeWebinar = () => {
               </div>
 
               <div className="space-y-5">
-                <div className="rounded-[2rem] bg-emerald-500 p-7 text-white shadow-[0_24px_60px_rgba(16,185,129,0.2)]">
+                <div className="rounded-[2rem] bg-emerald-500 p-7 text-white">
                   <div className="flex items-center gap-3">
                     <Clock3 className="h-5 w-5" />
                     <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-100">Urgency</p>
